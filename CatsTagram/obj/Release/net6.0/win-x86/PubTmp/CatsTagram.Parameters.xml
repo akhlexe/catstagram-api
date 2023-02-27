@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="IIS Web Application Name" description="" value="CatstagramServer" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Exequiel\\source\\repos\\CatsTagram\\CatsTagram\\obj\\Release\\net6\.0\\win-x86\\PubTmp\\Out\\$" />
-  </parameter>
-</parameters>
