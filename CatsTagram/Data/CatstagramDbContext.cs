@@ -11,6 +11,8 @@ namespace CatsTagram.Data
         {
         }
 
+        public DbSet<Cat> Cats { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -19,7 +21,6 @@ namespace CatsTagram.Data
                 .WithMany(u => u.Cats)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             base.OnModelCreating(builder);
         }
