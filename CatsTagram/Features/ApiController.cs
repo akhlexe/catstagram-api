@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CatsTagram.Controllers
+namespace CatsTagram.Features
 {
     [ApiController]
     [Route("[controller]")]
