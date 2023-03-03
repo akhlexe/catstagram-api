@@ -1,5 +1,6 @@
 ﻿using CatsTagram.Data;
 using CatsTagram.Data.Models;
+using CatsTagram.Features.Cats.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatsTagram.Features.Cats
@@ -9,8 +10,6 @@ namespace CatsTagram.Features.Cats
         private readonly CatstagramDbContext data;
 
         public CatsService(CatstagramDbContext data) => this.data = data;
-
-
 
         public async Task<int> Create(string imageUrl, string description, string userId)
         {
@@ -27,17 +26,29 @@ namespace CatsTagram.Features.Cats
             return cat.Id;
         }
 
-        public async Task<IEnumerable<CatListingResponseModel>> ByUser(string userId)
-        {
-            return await this.data
+        public async Task<IEnumerable<CatListingServiceModel>> ByUser(string userId)
+            => await this.data
                 .Cats
                 .Where(c => c.UserId == userId)
-                .Select(c => new CatListingResponseModel
+                .Select(c => new CatListingServiceModel
                 {
                     Id = c.Id,
                     ImageUrl = c.ImageUrl
                 })
                 .ToListAsync();
-        }
+
+        public async Task<CatDetailsServiceModel> Details(int id)
+            => await this.data
+                .Cats
+                .Where(c => c.Id == id)
+                .Select(c => new CatDetailsServiceModel
+                {
+                    Id = c.Id,
+                    UserId = c.UserId,
+                    ImageUrl = c.ImageUrl,
+                    Description = c.Description,
+                    UserName = c.User.UserName
+                })
+                .FirstOrDefaultAsync();
     }
 }

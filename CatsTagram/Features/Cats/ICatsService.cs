@@ -1,9 +1,13 @@
-﻿namespace CatsTagram.Features.Cats
+﻿using CatsTagram.Features.Cats.Models;
+
+namespace CatsTagram.Features.Cats
 {
     public interface ICatsService
     {
         public Task<int> Create(string imageUrl, string description, string userId);
 
-        public Task<IEnumerable<CatListingResponseModel>> ByUser(string userId);
+        public Task<IEnumerable<CatListingServiceModel>> ByUser(string userId);
+
+        public Task<CatDetailsServiceModel> Details(int id);
     }
 }

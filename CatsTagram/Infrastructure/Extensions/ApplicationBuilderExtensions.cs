@@ -1,7 +1,8 @@
 ﻿using CatsTagram.Data;
+using CatsTagram.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace CatsTagram.Infrastructure
+namespace CatsTagram.Infrastructure.Extensions
 {
     public static class ApplicationBuilderExtensions
     {

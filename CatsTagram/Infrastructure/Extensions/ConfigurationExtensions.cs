@@ -1,4 +1,4 @@
-﻿namespace CatsTagram.Infrastructure
+﻿namespace CatsTagram.Infrastructure.Extensions
 {
     public static class ConfigurationExtensions
     {

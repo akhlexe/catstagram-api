@@ -2,6 +2,7 @@
 using CatsTagram.Data.Models;
 using CatsTagram.Features.Cats;
 using CatsTagram.Features.Identity;
+using CatsTagram.Infrastructure.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-namespace CatsTagram.Infrastructure
+namespace CatsTagram.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -86,5 +87,10 @@ namespace CatsTagram.Infrastructure
 
             return services;
         }
+
+        public static void AddApiControllers(this IServiceCollection services)
+            => services.AddControllers(options => options
+                .Filters
+                .Add<ModelOrNotFoundActionFilter>());
     }
 }

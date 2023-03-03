@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CatsTagram.Features.Cats
+namespace CatsTagram.Features.Cats.Models
 {
     using static Data.Validation.Cat;
 

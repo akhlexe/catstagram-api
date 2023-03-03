@@ -1,5 +1,6 @@
 using CatsTagram;
-using CatsTagram.Infrastructure;
+using CatsTagram.Infrastructure.Extensions;
+using CatsTagram.Infrastructure.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services
     .AddJwtAuthentication(appSettings)
     .AddApplicationServices()
     .AddSwagger()
-    .AddControllers();
+    .AddApiControllers();
 
 var app = builder.Build();
 

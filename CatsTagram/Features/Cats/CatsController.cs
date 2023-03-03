@@ -1,12 +1,11 @@
-﻿using CatsTagram.Data;
-using CatsTagram.Data.Models;
-using CatsTagram.Infrastructure;
+﻿using CatsTagram.Features.Cats.Models;
+using CatsTagram.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace CatsTagram.Features.Cats
 {
+    [Authorize]
     public class CatsController : ApiContoller
     {
         private readonly ICatsService catsService;
@@ -16,17 +15,20 @@ namespace CatsTagram.Features.Cats
             this.catsService = catsService;
         }
 
-        [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<CatListingResponseModel>> Mine()
+        public async Task<IEnumerable<CatListingServiceModel>> Mine()
         {
             var userId = this.User.GetId();
 
             return await this.catsService.ByUser(userId);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<CatDetailsServiceModel>> Details(int id)
+            => await catsService.Details(id);
 
-        [Authorize]
+
         [HttpPost]
         public async Task<ActionResult> Create(CreateCatRequestModel model)
         {

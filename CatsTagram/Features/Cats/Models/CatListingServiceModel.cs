@@ -1,6 +1,6 @@
-﻿namespace CatsTagram.Features.Cats
+﻿namespace CatsTagram.Features.Cats.Models
 {
-    public class CatListingResponseModel
+    public class CatListingServiceModel
     {
         public int Id { get; set; }
 
