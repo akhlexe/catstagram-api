@@ -17,6 +17,16 @@ namespace CatsTagram.Features.Cats
         }
 
         [Authorize]
+        [HttpGet]
+        public async Task<IEnumerable<CatListingResponseModel>> Mine()
+        {
+            var userId = this.User.GetId();
+
+            return await this.catsService.ByUser(userId);
+        }
+
+
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> Create(CreateCatRequestModel model)
         {
