@@ -42,5 +42,23 @@ namespace CatsTagram.Features.Cats
 
             return Created(nameof(this.Create), id);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> Update(UpdateCatRequestModel model)
+        {
+            var userId = this.User.GetId();
+
+            bool updated = await this.catsService.Update(
+                model.Id,
+                model.Description,
+                userId);
+
+            if (!updated)
+            {
+                return this.BadRequest();
+            }
+
+            return this.Ok();
+        }
     }
 }

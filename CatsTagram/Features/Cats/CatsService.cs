@@ -50,5 +50,22 @@ namespace CatsTagram.Features.Cats
                     UserName = c.User.UserName
                 })
                 .FirstOrDefaultAsync();
+
+        public async Task<bool> Update(int id, string description, string userId)
+        {
+            var cat = await this.data
+                .Cats
+                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
+
+            if (cat == null)
+            {
+                return false;
+            }
+
+            cat.Description = description;
+            await this.data.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
