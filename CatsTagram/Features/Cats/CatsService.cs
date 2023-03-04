@@ -11,7 +11,7 @@ namespace CatsTagram.Features.Cats
 
         public CatsService(CatstagramDbContext data) => this.data = data;
 
-        public async Task<int> Create(string imageUrl, string description, string userId)
+        public async Task<int> CreateAsync(string imageUrl, string description, string userId)
         {
             var cat = new Cat
             {
@@ -26,7 +26,7 @@ namespace CatsTagram.Features.Cats
             return cat.Id;
         }
 
-        public async Task<IEnumerable<CatListingServiceModel>> ByUser(string userId)
+        public async Task<IEnumerable<CatListingServiceModel>> ByUserAsync(string userId)
             => await this.data
                 .Cats
                 .Where(c => c.UserId == userId)
@@ -37,7 +37,7 @@ namespace CatsTagram.Features.Cats
                 })
                 .ToListAsync();
 
-        public async Task<CatDetailsServiceModel> Details(int id)
+        public async Task<CatDetailsServiceModel> DetailsAsync(int id)
             => await this.data
                 .Cats
                 .Where(c => c.Id == id)
@@ -51,11 +51,9 @@ namespace CatsTagram.Features.Cats
                 })
                 .FirstOrDefaultAsync();
 
-        public async Task<bool> Update(int id, string description, string userId)
+        public async Task<bool> UpdateAsync(int id, string description, string userId)
         {
-            var cat = await this.data
-                .Cats
-                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
+            var cat = await this.GetByIdAndUserId(id, userId);
 
             if (cat == null)
             {
@@ -67,5 +65,26 @@ namespace CatsTagram.Features.Cats
 
             return true;
         }
+
+        public async Task<bool> DeleteAsync(int id, string userId)
+        {
+            var cat = await this.GetByIdAndUserId(id, userId);
+
+            if (cat == null)
+            {
+                return false;
+            }
+
+            this.data.Cats.Remove(cat);
+            await this.data.SaveChangesAsync();
+
+            return true;
+        }
+
+        private async Task<Cat> GetByIdAndUserId(int id, string userId)
+            => await this.data
+                .Cats
+                .Where(c => c.Id == id && c.UserId == userId)
+                .FirstOrDefaultAsync();
     }
 }

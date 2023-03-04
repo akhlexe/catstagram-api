@@ -1,4 +1,5 @@
 ﻿using CatsTagram.Features.Cats.Models;
+using CatsTagram.Infrastructure;
 using CatsTagram.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,13 @@ namespace CatsTagram.Features.Cats
         {
             var userId = this.User.GetId();
 
-            return await this.catsService.ByUser(userId);
+            return await this.catsService.ByUserAsync(userId);
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route(WebConstants.Id)]
         public async Task<ActionResult<CatDetailsServiceModel>> Details(int id)
-            => await catsService.Details(id);
+            => await catsService.DetailsAsync(id);
 
 
         [HttpPost]
@@ -35,7 +36,7 @@ namespace CatsTagram.Features.Cats
             string userId = User.GetId()
                 ?? throw new UnauthorizedAccessException();
 
-            int id = await catsService.Create(
+            int id = await catsService.CreateAsync(
                 model.ImageUrl,
                 model.Description,
                 userId);
@@ -48,12 +49,28 @@ namespace CatsTagram.Features.Cats
         {
             var userId = this.User.GetId();
 
-            bool updated = await this.catsService.Update(
+            bool updated = await this.catsService.UpdateAsync(
                 model.Id,
                 model.Description,
                 userId);
 
             if (!updated)
+            {
+                return this.BadRequest();
+            }
+
+            return this.Ok();
+        }
+
+        [HttpDelete]
+        [Route(WebConstants.Id)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            string? userId = this.User.GetId();
+
+            bool deleted = await this.catsService.DeleteAsync(id, userId);
+
+            if (!deleted)
             {
                 return this.BadRequest();
             }
