@@ -5,9 +5,6 @@ namespace CatsTagram.Features.Cats.Models
 {
     public class UpdateCatRequestModel
     {
-        [Required]
-        public int Id { get; set; }
-
         [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; }
     }

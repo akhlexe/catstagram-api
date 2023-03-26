@@ -1,6 +1,7 @@
 ﻿using CatsTagram.Data;
 using CatsTagram.Data.Models;
 using CatsTagram.Features.Cats.Models;
+using CatsTagram.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatsTagram.Features.Cats
@@ -52,13 +53,13 @@ namespace CatsTagram.Features.Cats
                 })
                 .FirstOrDefaultAsync();
 
-        public async Task<bool> UpdateAsync(int id, string description, string userId)
+        public async Task<Result> UpdateAsync(int id, string description, string userId)
         {
             var cat = await this.GetByIdAndUserId(id, userId);
 
             if (cat == null)
             {
-                return false;
+                return "This user cannot edit this cat.";
             }
 
             cat.Description = description;
@@ -67,13 +68,13 @@ namespace CatsTagram.Features.Cats
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id, string userId)
+        public async Task<Result> DeleteAsync(int id, string userId)
         {
             var cat = await this.GetByIdAndUserId(id, userId);
 
             if (cat == null)
             {
-                return false;
+                return "This user cannot delete this cat.";
             }
 
             this.data.Cats.Remove(cat);

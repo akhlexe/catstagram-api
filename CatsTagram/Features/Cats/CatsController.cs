@@ -50,16 +50,17 @@ namespace CatsTagram.Features.Cats
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(UpdateCatRequestModel model)
+        [Route(WebConstants.Id)]
+        public async Task<ActionResult> Update(int id, UpdateCatRequestModel model)
         {
             var userId = this.currentUser.GetId();
 
-            bool updated = await this.cats.UpdateAsync(
-                model.Id,
+            Result result = await this.cats.UpdateAsync(
+                id,
                 model.Description,
                 userId);
 
-            if (!updated)
+            if (result.Failed)
             {
                 return this.BadRequest();
             }
@@ -73,9 +74,9 @@ namespace CatsTagram.Features.Cats
         {
             string? userId = this.currentUser.GetId();
 
-            bool deleted = await this.cats.DeleteAsync(id, userId);
+            Result result = await this.cats.DeleteAsync(id, userId);
 
-            if (!deleted)
+            if (result.Failed)
             {
                 return this.BadRequest();
             }

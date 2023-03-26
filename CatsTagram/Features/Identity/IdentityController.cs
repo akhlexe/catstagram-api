@@ -1,5 +1,6 @@
 ﻿using CatsTagram.Data.Models;
 using CatsTagram.Features.Identity.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -34,12 +35,12 @@ namespace CatsTagram.Features.Identity
 
             var result = await userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return Ok();
+                return BadRequest(result.Errors);
             }
 
-            return BadRequest(result.Errors);
+            return Ok();
         }
 
         [HttpPost]

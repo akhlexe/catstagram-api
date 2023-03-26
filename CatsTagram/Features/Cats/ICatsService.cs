@@ -1,4 +1,5 @@
 ﻿using CatsTagram.Features.Cats.Models;
+using CatsTagram.Infrastructure.Services;
 
 namespace CatsTagram.Features.Cats
 {
@@ -10,8 +11,8 @@ namespace CatsTagram.Features.Cats
 
         Task<CatDetailsServiceModel> DetailsAsync(int id);
 
-        Task<bool> UpdateAsync(int id, string description, string userId);
+        Task<Result> UpdateAsync(int id, string description, string userId);
 
-        Task<bool> DeleteAsync(int id, string userId);
+        Task<Result> DeleteAsync(int id, string userId);
     }
 }
