@@ -41,6 +41,7 @@ namespace CatsTagram.Data
         {
             builder
                 .Entity<Cat>()
+                .HasQueryFilter(c => !c.IsDeleted)
                 .HasOne(c => c.User)
                 .WithMany(u => u.Cats)
                 .HasForeignKey(c => c.UserId)
