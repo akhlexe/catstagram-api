@@ -3,6 +3,7 @@ using CatsTagram.Data.Models;
 using CatsTagram.Features.Cats;
 using CatsTagram.Features.Identity;
 using CatsTagram.Infrastructure.Filters;
+using CatsTagram.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -76,6 +77,7 @@ namespace CatsTagram.Infrastructure.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddScoped<ICurrentUserService, CurrentUserService>()
                 .AddTransient<ICatsService, CatsService>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)

@@ -16,7 +16,6 @@ namespace CatsTagram.Infrastructure.Filters
                     context.Result = new NotFoundResult();
                 }
             }
-
         }
     }
 }

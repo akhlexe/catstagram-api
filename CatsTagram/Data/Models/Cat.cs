@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CatsTagram.Data.Models.Base;
+using System.ComponentModel.DataAnnotations;
 using static CatsTagram.Data.Validation.Cat;
 
 namespace CatsTagram.Data.Models
 {
-    public class Cat
+    public class Cat : DeletableEntity
     {
         public int Id { get; set; }
 

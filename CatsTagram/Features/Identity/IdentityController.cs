@@ -9,16 +9,16 @@ namespace CatsTagram.Features.Identity
     public class IdentityController : ApiContoller
     {
         private readonly UserManager<User> userManager;
-        private readonly IIdentityService identityService;
+        private readonly IIdentityService identity;
         private readonly AppSettings appSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<AppSettings> appSettings,
-            IIdentityService identityService)
+            IIdentityService identity)
         {
             this.userManager = userManager;
-            this.identityService = identityService;
+            this.identity = identity;
             this.appSettings = appSettings.Value;
         }
 
@@ -60,7 +60,7 @@ namespace CatsTagram.Features.Identity
                 return Unauthorized();
             }
 
-            string token = this.identityService.GenerateJwtToken(
+            string token = this.identity.GenerateJwtToken(
                 user.Id,
                 user.UserName,
                 this.appSettings.Secret);
